@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace BankAppEF.Repository.Implementation
 {
-    public class GenericRepository<T> : IGenericRepository<T>
+    public class DBRepository<T> : IDBRepository<T>
         where T : class
     {
-        private CustomerDbContext DBContext;
+        private readonly Datalayer.Models.CustomerDbContext DBContext;
         private readonly DbSet<T> dbEntity;
 
-        public GenericRepository(CustomerDbContext context)
+        public DBRepository(Datalayer.Models.CustomerDbContext context)
         {
             if (context != null)
             {

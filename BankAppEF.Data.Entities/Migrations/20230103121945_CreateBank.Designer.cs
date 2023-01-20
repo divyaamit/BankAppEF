@@ -4,6 +4,7 @@ using BankAppEF.Datalayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankAppEF.Data.Entities.Migrations
 {
     [DbContext(typeof(Datalayer.Models.CustomerDbContext))]
-    partial class CustomerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230103121945_CreateBank")]
+    partial class CreateBank
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,13 +62,11 @@ namespace BankAppEF.Data.Entities.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExecutiveId"));
 
-                    b.Property<string>("ExecutiveBranch")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ExecutiveBranch")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ExecutiveContact")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ExecutiveContact")
+                        .HasColumnType("int");
 
                     b.Property<string>("ExecutiveEmail")
                         .IsRequired()
@@ -124,16 +125,12 @@ namespace BankAppEF.Data.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("CustomerBalance")
-                        .HasColumnType("real");
-
                     b.Property<string>("CustomerCity")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustomerContact")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CustomerContact")
+                        .HasColumnType("int");
 
                     b.Property<string>("CustomerCountry")
                         .IsRequired()

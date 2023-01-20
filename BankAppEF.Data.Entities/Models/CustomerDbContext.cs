@@ -16,6 +16,8 @@ namespace BankAppEF.Datalayer.Models
         }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Executive> Executives { get; set; }
+        public DbSet<Transactions> Transactions { get; set; }
+        public DbSet<Admin> Admin { get; set; }
 
     }
 }

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-//using BankAppEF.Data.Entities;
+using BankAppEF.Data.Entities;
 using BankAppEF.Datalayer.Models;
 using BankAppEF.Datalayer.Interface;
 using BankAppEF.Datalayer.Implementation;
@@ -21,7 +21,7 @@ var mapconfig = new MapperConfiguration(options => options.CreateMap<Customer, C
 AutoMapper.IMapper mapper = mapconfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
-builder.Services.AddDbContext<CustomerDbContext>(options
+builder.Services.AddDbContext<DbContext>(options
     => options.UseSqlServer(builder.Configuration.GetConnectionString("DataConnection")));
 
 builder.Services.AddCors(cors=>cors.AddPolicy("MyPolicy", builder =>
@@ -30,9 +30,12 @@ builder.Services.AddCors(cors=>cors.AddPolicy("MyPolicy", builder =>
     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 }));
 
-builder.Services.AddScoped<ICustomerDL, CustomerDL>();
+builder.Services.AddScoped<ICustomerDTO, CustomerDTO>();
 builder.Services.AddScoped<ICustomeRepository, CustomerRepository>();
-builder.Services.AddScoped<IExecutiveDL, ExecutiveDL>();
+builder.Services.AddScoped<IExecutiveDTO, ExecutiveDTO>();
+builder.Services.AddScoped<IAdminDTO, AdminDTO>();
+builder.Services.AddScoped<ITransactionsDTO, TransactionsDTO>();
+
 
 
 var app = builder.Build();

@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAppEF", "BankAppEF\BankAppEF.csproj", "{E9C96921-D9C7-43E3-A946-2270DE167D1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankApp", "BankAppEF\BankApp.csproj", "{E9C96921-D9C7-43E3-A946-2270DE167D1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAppEF.Datalayer", "BankAppEF.Datalayer\BankAppEF.Datalayer.csproj", "{68160E63-068F-4787-B379-192DAEBF4944}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankApp.Datalayer", "BankAppEF.Datalayer\BankApp.Datalayer.csproj", "{68160E63-068F-4787-B379-192DAEBF4944}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAppEF.Data.Entities", "BankAppEF.Data.Entities\BankAppEF.Data.Entities.csproj", "{50A29614-86DB-4A2E-A16C-5B35ED01C743}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankApp.Data.Entities", "BankAppEF.Data.Entities\BankApp.Data.Entities.csproj", "{50A29614-86DB-4A2E-A16C-5B35ED01C743}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAppEF.Entities", "BankAppEF.Entities\BankAppEF.Entities.csproj", "{3726168E-5B53-4FBF-A3BE-C5352945846A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankApp.Entities", "BankAppEF.Entities\BankApp.Entities.csproj", "{3726168E-5B53-4FBF-A3BE-C5352945846A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAppEF.Repository", "BankAppEF.Repository\BankAppEF.Repository.csproj", "{E595124E-426B-4E91-AA76-A19CA51478B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankApp.Repository", "BankAppEF.Repository\BankApp.Repository.csproj", "{E595124E-426B-4E91-AA76-A19CA51478B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

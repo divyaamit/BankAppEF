@@ -10,8 +10,8 @@ namespace BankAppEF.Controllers
     [ApiController]
     public class ExecutiveController : ControllerBase
     {
-        private readonly IExecutiveDL executiveDL;
-        public ExecutiveController(IExecutiveDL _executiveDL)
+        private readonly IExecutiveDTO executiveDL;
+        public ExecutiveController(IExecutiveDTO _executiveDL)
         {
             this.executiveDL = _executiveDL;
         }

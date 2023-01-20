@@ -11,9 +11,9 @@ namespace BankAppEF.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ICustomerDL CustomerobjDL;
+        private readonly ICustomerDTO CustomerobjDL;
 
-        public CustomerController(ICustomerDL customerobjDL)
+        public CustomerController(ICustomerDTO customerobjDL)
         {
             this.CustomerobjDL = customerobjDL;
         }

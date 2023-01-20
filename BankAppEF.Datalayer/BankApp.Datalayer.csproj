@@ -12,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BankAppEF.Data.Entities\BankAppEF.Data.Entities.csproj" />
-    <ProjectReference Include="..\BankAppEF.Entities\BankAppEF.Entities.csproj" />
-    <ProjectReference Include="..\BankAppEF.Repository\BankAppEF.Repository.csproj" />
+    <ProjectReference Include="..\BankAppEF.Data.Entities\BankApp.Data.Entities.csproj" />
+    <ProjectReference Include="..\BankAppEF.Entities\BankApp.Entities.csproj" />
+    <ProjectReference Include="..\BankAppEF.Repository\BankApp.Repository.csproj" />
   </ItemGroup>
 
 </Project>

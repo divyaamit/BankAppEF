@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BankAppEF.Repository.Interface
 {
-    public interface IGenericRepository<T>
+    public interface IDBRepository<T>
         where T : class
     {
         Task<IEnumerable<T>> GetAll();

@@ -12,7 +12,7 @@ namespace BankAppEF.Entities.Model
         public string ExecutiveFirstName { get; set; }
         public string ExecutiveLastName { get; set; }
         public string ExecutiveEmail { get; set; }
-        public int ExecutiveContact { get; set; }
-        public int ExecutiveBranch { get; set; }
+        public string ExecutiveContact { get; set; }
+        public string ExecutiveBranch { get; set; }
     }
 }

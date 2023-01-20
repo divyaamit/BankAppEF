@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BankAppEF.Datalayer.Interface
 {
-    public interface ICustomerDL
+    public interface ICustomerDTO
     {
         public Task<IEnumerable<CustomerModel>> GetCustomerDl();
         public Task<CustomerModel> GetCustomerById(int id);
