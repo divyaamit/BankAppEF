@@ -13,10 +13,10 @@ namespace BankAppEF.Repository.Implementation
 {
     public class CustomerRepository : ICustomeRepository
     {
-        private Datalayer.Models.CustomerDbContext customerDbContext;
+        private Datalayer.Models.AppDbContext customerDbContext;
         private IMapper mapper;
 
-        public CustomerRepository(Datalayer.Models.CustomerDbContext dbContext, IMapper  _mapper)
+        public CustomerRepository(Datalayer.Models.AppDbContext dbContext, IMapper  _mapper)
         {
             customerDbContext = dbContext;
             mapper = _mapper;

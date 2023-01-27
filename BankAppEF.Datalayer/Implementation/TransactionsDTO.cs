@@ -15,25 +15,25 @@ namespace BankAppEF.Datalayer.Implementation
 {
     public class TransactionsDTO : ITransactionsDTO
     {
-        private IDBRepository<Transactions> genericRepository;
-        private readonly CustomerDbContext dbContext;
+        private IDBRepository<Transaction> genericRepository;
+        private readonly AppDbContext dbContext;
 
-        public TransactionsDTO(CustomerDbContext dbContextref)
+        public TransactionsDTO(AppDbContext dbContextref)
         {
-            this.genericRepository = new DBRepository<Transactions>(dbContextref);
+            this.genericRepository = new DBRepository<Transaction>(dbContextref);
             this.dbContext = dbContextref;
         }
         public async Task<TransactionsModel> GetTransactionsById(int id)
         {
-            Transactions TransactionsById = (Transactions)await genericRepository.GetById(id);
-            var translist = Helper<Transactions, TransactionsModel>.Map(TransactionsById);
+            Transaction TransactionsById = (Transaction)await genericRepository.GetById(id);
+            var translist = Helper<Transaction, TransactionsModel>.Map(TransactionsById);
             return translist;
         }
 
         public async Task<IEnumerable<TransactionsModel>> GetTransactionsDl()
         {
-            IEnumerable<Transactions> AllTransacttion = (await genericRepository.GetAll()).ToList();
-            var translist = Helper<Transactions, TransactionsModel>.Map(AllTransacttion);
+            IEnumerable<Transaction> AllTransacttion = (await genericRepository.GetAll()).ToList();
+            var translist = Helper<Transaction, TransactionsModel>.Map(AllTransacttion);
             return translist;
         }
 
@@ -44,13 +44,13 @@ namespace BankAppEF.Datalayer.Implementation
 
         public void UpdateTransactions(TransactionsModel transactions)
         {
-            Transactions translist = Helper<TransactionsModel, Transactions>.Map(transactions);
+            Transaction translist = Helper<TransactionsModel, Transaction>.Map(transactions);
             genericRepository.Update(translist);
         }
 
         public void InsertTransactions(TransactionsModel transactions)
         {
-            Transactions translist = Helper<TransactionsModel, Transactions>.Map(transactions);
+            Transaction translist = Helper<TransactionsModel, Transaction>.Map(transactions);
             genericRepository.Insert(translist);
         }
     }

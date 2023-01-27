@@ -10,10 +10,10 @@ namespace BankAppEF.Datalayer.Implementation
     public class CustomerDTO : ICustomerDTO
     {
         private DBRepository<Customer> genericRepository;
-        private readonly CustomerDbContext dbContext;
+        private readonly AppDbContext dbContext;
 
 
-        public CustomerDTO(CustomerDbContext dbContextref)
+        public CustomerDTO(AppDbContext dbContextref)
         {
             this.genericRepository = new DBRepository<Customer>(dbContextref);
             this.dbContext = dbContextref;

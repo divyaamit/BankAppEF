@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BankAppEF.Data.Entities.Migrations
+namespace BankApp.Data.Entities.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateBank : Migration
+    public partial class CreateBankApp : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,13 +36,14 @@ namespace BankAppEF.Data.Entities.Migrations
                     CustomerFirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerLastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CustomerContact = table.Column<int>(type: "int", nullable: false),
+                    CustomerContact = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerState = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerZipCode = table.Column<int>(type: "int", nullable: false),
                     CustomerCountry = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerAccountNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerBalance = table.Column<float>(type: "real", nullable: false),
                     CustomerIFSC = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerSSN = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -60,8 +61,8 @@ namespace BankAppEF.Data.Entities.Migrations
                     ExecutiveFirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExecutiveLastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ExecutiveEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ExecutiveContact = table.Column<int>(type: "int", nullable: false),
-                    ExecutiveBranch = table.Column<int>(type: "int", nullable: false)
+                    ExecutiveContact = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExecutiveBranch = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,14 +75,27 @@ namespace BankAppEF.Data.Entities.Migrations
                 {
                     TransactionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    SenderId = table.Column<int>(type: "int", nullable: true),
+                    ContactNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TransactionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TransactionAmount = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transactions", x => x.TransactionId);
+                    table.ForeignKey(
+                        name: "FK_Transactions_Customers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "Customers",
+                        principalColumn: "CustomerId");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_SenderId",
+                table: "Transactions",
+                column: "SenderId");
         }
 
         /// <inheritdoc />
@@ -91,13 +105,13 @@ namespace BankAppEF.Data.Entities.Migrations
                 name: "Admin");
 
             migrationBuilder.DropTable(
-                name: "Customers");
-
-            migrationBuilder.DropTable(
                 name: "Executives");
 
             migrationBuilder.DropTable(
                 name: "Transactions");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
         }
     }
 }

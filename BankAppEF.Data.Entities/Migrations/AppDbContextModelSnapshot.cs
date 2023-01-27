@@ -4,19 +4,16 @@ using BankAppEF.Datalayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BankAppEF.Data.Entities.Migrations
+namespace BankApp.Data.Entities.Migrations
 {
-    [DbContext(typeof(Datalayer.Models.CustomerDbContext))]
-    [Migration("20230119055042_UpdateModels")]
-    partial class UpdateModels
+    [DbContext(typeof(AppDbContext))]
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,13 +84,24 @@ namespace BankAppEF.Data.Entities.Migrations
                     b.ToTable("Executives");
                 });
 
-            modelBuilder.Entity("BankAppEF.Data.Entities.Models.Transactions", b =>
+            modelBuilder.Entity("BankAppEF.Data.Entities.Models.Transaction", b =>
                 {
                     b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
+
+                    b.Property<string>("ContactNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SenderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("TransactionAmount")
                         .IsRequired()
@@ -107,6 +115,8 @@ namespace BankAppEF.Data.Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TransactionId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Transactions");
                 });
@@ -126,6 +136,9 @@ namespace BankAppEF.Data.Entities.Migrations
                     b.Property<string>("CustomerAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("CustomerBalance")
+                        .HasColumnType("real");
 
                     b.Property<string>("CustomerCity")
                         .IsRequired()
@@ -169,6 +182,20 @@ namespace BankAppEF.Data.Entities.Migrations
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("BankAppEF.Data.Entities.Models.Transaction", b =>
+                {
+                    b.HasOne("BankAppEF.Datalayer.Models.Customer", "Customer")
+                        .WithMany("Transactions")
+                        .HasForeignKey("SenderId");
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("BankAppEF.Datalayer.Models.Customer", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,9 +17,9 @@ namespace BankAppEF.Datalayer.Implementation
     public class ExecutiveDTO : IExecutiveDTO
     {
         private IDBRepository<Executive> genericRepository;
-        private readonly CustomerDbContext dbContext;
+        private readonly AppDbContext dbContext;
 
-        public ExecutiveDTO(CustomerDbContext dbContextref)
+        public ExecutiveDTO(AppDbContext dbContextref)
         {
             this.genericRepository = new DBRepository<Executive>(dbContextref);
             this.dbContext = dbContextref;

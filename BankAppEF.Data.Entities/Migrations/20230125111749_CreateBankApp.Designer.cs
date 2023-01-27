@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BankAppEF.Data.Entities.Migrations
+namespace BankApp.Data.Entities.Migrations
 {
-    [DbContext(typeof(Datalayer.Models.CustomerDbContext))]
-    [Migration("20230119113727_UpdateCustomerAmount")]
-    partial class UpdateCustomerAmount
+    [DbContext(typeof(AppDbContext))]
+    [Migration("20230125111749_CreateBankApp")]
+    partial class CreateBankApp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,13 +87,24 @@ namespace BankAppEF.Data.Entities.Migrations
                     b.ToTable("Executives");
                 });
 
-            modelBuilder.Entity("BankAppEF.Data.Entities.Models.Transactions", b =>
+            modelBuilder.Entity("BankAppEF.Data.Entities.Models.Transaction", b =>
                 {
                     b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
+
+                    b.Property<string>("ContactNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SenderId")
+                        .HasColumnType("int");
 
                     b.Property<string>("TransactionAmount")
                         .IsRequired()
@@ -107,6 +118,8 @@ namespace BankAppEF.Data.Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TransactionId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Transactions");
                 });
@@ -172,6 +185,20 @@ namespace BankAppEF.Data.Entities.Migrations
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("BankAppEF.Data.Entities.Models.Transaction", b =>
+                {
+                    b.HasOne("BankAppEF.Datalayer.Models.Customer", "Customer")
+                        .WithMany("Transactions")
+                        .HasForeignKey("SenderId");
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("BankAppEF.Datalayer.Models.Customer", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

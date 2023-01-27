@@ -21,7 +21,7 @@ var mapconfig = new MapperConfiguration(options => options.CreateMap<Customer, C
 AutoMapper.IMapper mapper = mapconfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
-builder.Services.AddDbContext<DbContext>(options
+builder.Services.AddDbContext<AppDbContext>(options
     => options.UseSqlServer(builder.Configuration.GetConnectionString("DataConnection")));
 
 builder.Services.AddCors(cors=>cors.AddPolicy("MyPolicy", builder =>
@@ -30,11 +30,11 @@ builder.Services.AddCors(cors=>cors.AddPolicy("MyPolicy", builder =>
     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 }));
 
-builder.Services.AddScoped<ICustomerDTO, CustomerDTO>();
-builder.Services.AddScoped<ICustomeRepository, CustomerRepository>();
-builder.Services.AddScoped<IExecutiveDTO, ExecutiveDTO>();
-builder.Services.AddScoped<IAdminDTO, AdminDTO>();
-builder.Services.AddScoped<ITransactionsDTO, TransactionsDTO>();
+builder.Services.AddTransient<ICustomerDTO, CustomerDTO>();
+builder.Services.AddTransient<ICustomeRepository, CustomerRepository>();
+builder.Services.AddTransient<IExecutiveDTO, ExecutiveDTO>();
+builder.Services.AddTransient<IAdminDTO, AdminDTO>();
+builder.Services.AddTransient<ITransactionsDTO, TransactionsDTO>();
 
 
 

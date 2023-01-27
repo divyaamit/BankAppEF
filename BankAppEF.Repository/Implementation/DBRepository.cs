@@ -1,21 +1,16 @@
 ﻿using BankAppEF.Datalayer.Models;
 using BankAppEF.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankAppEF.Repository.Implementation
 {
     public class DBRepository<T> : IDBRepository<T>
         where T : class
     {
-        private readonly Datalayer.Models.CustomerDbContext DBContext;
+        private readonly Datalayer.Models.AppDbContext DBContext;
         private readonly DbSet<T> dbEntity;
 
-        public DBRepository(Datalayer.Models.CustomerDbContext context)
+        public DBRepository(Datalayer.Models.AppDbContext context)
         {
             if (context != null)
             {

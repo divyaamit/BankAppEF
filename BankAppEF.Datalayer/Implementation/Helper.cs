@@ -1,14 +1,4 @@
 ﻿using AutoMapper;
-using BankAppEF.Datalayer.Models;
-using BankAppEF.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Identity.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BankAppEF.Datalayer.Implementation
 {
