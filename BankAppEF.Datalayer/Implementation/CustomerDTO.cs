@@ -4,6 +4,7 @@ using BankAppEF.Datalayer.Models;
 using BankAppEF.Entities;
 using BankAppEF.Repository.Implementation;
 using BankAppEF.Repository.Interface;
+using System.Linq;
 
 namespace BankAppEF.Datalayer.Implementation
 {
@@ -21,15 +22,15 @@ namespace BankAppEF.Datalayer.Implementation
 
         public async Task<IEnumerable<CustomerModel>> GetCustomerDl()
         {
-            IEnumerable<Customer> AllCustomer = (await genericRepository.GetAll()).ToList();
-            var custlist = Helper<Customer, CustomerModel>.Map(AllCustomer);
+            IEnumerable<Customer> allCustomer = (await genericRepository.GetAll()).ToList();
+            IEnumerable<CustomerModel> custlist = Helper<Customer, CustomerModel>.Map(allCustomer);
             return custlist;
         }
 
         public async Task<CustomerModel> GetCustomerById(int id)
         {
-            Customer CustomerById = (Customer)await genericRepository.GetById(id);
-            var custlist = Helper<Customer, CustomerModel>.Map(CustomerById);
+            Customer customerById = await genericRepository.GetById(id);
+            CustomerModel custlist = Helper<Customer, CustomerModel>.Map(customerById);
             return custlist;
         }
 
@@ -40,13 +41,13 @@ namespace BankAppEF.Datalayer.Implementation
 
         public void UpdateCustomer(CustomerModel customer)
         {
-             var custlist = Helper<CustomerModel, Customer>.Map(customer);
+             Customer custlist = Helper<CustomerModel, Customer>.Map(customer);
              genericRepository.Update(custlist);
         }
 
         public void InsertCustomer(CustomerModel customer)
         {
-            var custlist = Helper<CustomerModel, Customer>.Map(customer);
+            Customer custlist = Helper<CustomerModel, Customer>.Map(customer);
             genericRepository.Insert(custlist);
         }
     }

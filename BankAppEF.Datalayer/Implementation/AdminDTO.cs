@@ -26,28 +26,28 @@ namespace BankAppEF.Datalayer.Implementation
 
         public async Task<AdminModel> GetAdminById(int id)
         {
-            Admin AdminById = (Admin)await genericRepository.GetById(id);
-            var adminlist = Helper<Admin, AdminModel>.Map(AdminById);
+            Admin adminById = (Admin)await genericRepository.GetById(id);
+            AdminModel adminlist = Helper<Admin, AdminModel>.Map(adminById);
             return adminlist;
         }
 
         public async Task<IEnumerable<AdminModel>> GetAdminDl()
         {
-            IEnumerable<Admin> AllAdmin = (await genericRepository.GetAll()).ToList();
-            var adminlist = Helper<Admin, AdminModel>.Map(AllAdmin);
+            IEnumerable<Admin> allAdmin = (await genericRepository.GetAll()).ToList();
+            IEnumerable<AdminModel> adminlist = Helper<Admin, AdminModel>.Map(allAdmin);
             return adminlist;
         }
 
         public void InsertAdmin(AdminModel admin)
         {
-            Admin adminlist = Helper<AdminModel, Admin>.Map(admin);
-            genericRepository.Update(adminlist);
+            Admin adminList = Helper<AdminModel, Admin>.Map(admin);
+            genericRepository.Update(adminList);
         }
 
         public void UpdateAdmin(AdminModel admin)
         {
-            Admin adminlist = Helper<AdminModel, Admin>.Map(admin);
-            genericRepository.Update(adminlist);
+            Admin adminList = Helper<AdminModel, Admin>.Map(admin);
+            genericRepository.Update(adminList);
         }
     }
 }
