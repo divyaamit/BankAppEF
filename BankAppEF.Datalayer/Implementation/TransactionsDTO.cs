@@ -26,14 +26,14 @@ namespace BankAppEF.Datalayer.Implementation
         public async Task<TransactionsModel> GetTransactionsById(int id)
         {
             Transaction transactionsById = (Transaction)await genericRepository.GetById(id);
-            TransactionsModel translist = Helper<Transaction, TransactionsModel>.Map(transactionsById);
+            TransactionsModel translist = AppMapper<Transaction, TransactionsModel>.Map(transactionsById);
             return translist;
         }
 
         public async Task<IEnumerable<TransactionsModel>> GetTransactionsDl()
         {
             IEnumerable<Transaction> allTransacttion = (await genericRepository.GetAll()).ToList();
-            IEnumerable<TransactionsModel> translist = Helper<Transaction, TransactionsModel>.Map(allTransacttion);
+            IEnumerable<TransactionsModel> translist = AppMapper<Transaction, TransactionsModel>.Map(allTransacttion);
             return translist;
         }
 
@@ -44,13 +44,13 @@ namespace BankAppEF.Datalayer.Implementation
 
         public void UpdateTransactions(TransactionsModel transactions)
         {
-            Transaction transList = Helper<TransactionsModel, Transaction>.Map(transactions);
+            Transaction transList = AppMapper<TransactionsModel, Transaction>.Map(transactions);
             genericRepository.Update(transList);
         }
 
         public void InsertTransactions(TransactionsModel transactions)
         {
-            Transaction transList = Helper<TransactionsModel, Transaction>.Map(transactions);
+            Transaction transList = AppMapper<TransactionsModel, Transaction>.Map(transactions);
             genericRepository.Insert(transList);
         }
     }

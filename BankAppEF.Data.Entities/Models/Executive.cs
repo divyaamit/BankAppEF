@@ -10,12 +10,12 @@ namespace BankAppEF.Data.Entities.Models
     public class Executive
     {
         [Key]
-        public int ExecutiveId { get; set; }
-        public string ExecutiveFirstName { get; set; }
-        public string ExecutiveLastName { get; set; }
-        public string ExecutiveEmail { get; set; }
-        public string ExecutiveContact { get; set; }
-        public string ExecutiveBranch { get; set;}
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Contact { get; set; }
+        public string Branch { get; set;}
 
     }
 }

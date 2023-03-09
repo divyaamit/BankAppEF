@@ -1,4 +1,5 @@
-﻿using BankAppEF.Data.Entities.Models;
+﻿using BankApp.Repository.Interface;
+using BankAppEF.Data.Entities.Models;
 using BankAppEF.Datalayer.Implementation;
 using BankAppEF.Datalayer.Interface;
 using BankAppEF.Entities.Model;
@@ -12,30 +13,33 @@ namespace BankAppEF.Controllers
     [ApiController]
     public class TransactionsController : ControllerBase
     {
-        private readonly ITransactionsDTO transactionsDL;
-        public TransactionsController(ITransactionsDTO _transactionsDL)
+        private readonly IUnitOfWork unitOfWork;
+        public TransactionsController(IUnitOfWork unitOfWork)
         {
-            this.transactionsDL = _transactionsDL;
+            this.unitOfWork = unitOfWork;
         }
         // GET: api/<TransactionsController>
         [HttpGet]
         public async Task<IEnumerable<TransactionsModel>> Get()
         {
-            return await transactionsDL.GetTransactionsDl();
+            IEnumerable<Transaction> transactionDetails = await unitOfWork.transaction.GetAll();
+            return AppMapper<Transaction, TransactionsModel>.Map(transactionDetails);
         }
 
         // GET api/<TransactionsController>/5
         [HttpGet("{id}")]
         public async Task<TransactionsModel> GetByID(int id)
         {
-            return await this.transactionsDL.GetTransactionsById(id);
+            Transaction transactionById = await this.unitOfWork.transaction.GetById(id);
+            return AppMapper<Transaction, TransactionsModel>.Map(transactionById);
         }
 
         // POST api/<TransactionsController>
         [HttpPost]
         public IActionResult Post(TransactionsModel tra)
         {
-            this.transactionsDL.InsertTransactions(tra);
+            Transaction transactionDetails = AppMapper<TransactionsModel,Transaction>.Map(tra);
+            this.unitOfWork.transaction.Insert(transactionDetails);
             return Ok();
         }
 
@@ -43,7 +47,8 @@ namespace BankAppEF.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(TransactionsModel tra)
         {
-            this.transactionsDL.UpdateTransactions(tra);
+            Transaction transactionDetails = AppMapper<TransactionsModel, Transaction>.Map(tra);
+            this.unitOfWork.transaction.Update(transactionDetails);
             return Ok();
         }
 
@@ -51,7 +56,7 @@ namespace BankAppEF.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            this.transactionsDL.DeleteById(id);
+            this.unitOfWork.transaction.DeleteById(id);
         }
     }
 }

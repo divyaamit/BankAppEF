@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BankAppEF.Data.Entities.Models;
 using BankAppEF.Datalayer.Interface;
 using BankAppEF.Datalayer.Models;
 using BankAppEF.Entities;
@@ -23,14 +24,14 @@ namespace BankAppEF.Datalayer.Implementation
         public async Task<IEnumerable<CustomerModel>> GetCustomerDl()
         {
             IEnumerable<Customer> allCustomer = (await genericRepository.GetAll()).ToList();
-            IEnumerable<CustomerModel> custlist = Helper<Customer, CustomerModel>.Map(allCustomer);
+            IEnumerable<CustomerModel> custlist = AppMapper<Customer, CustomerModel>.Map(allCustomer);
             return custlist;
         }
 
         public async Task<CustomerModel> GetCustomerById(int id)
         {
             Customer customerById = await genericRepository.GetById(id);
-            CustomerModel custlist = Helper<Customer, CustomerModel>.Map(customerById);
+            CustomerModel custlist = AppMapper<Customer, CustomerModel>.Map(customerById);
             return custlist;
         }
 
@@ -41,13 +42,13 @@ namespace BankAppEF.Datalayer.Implementation
 
         public void UpdateCustomer(CustomerModel customer)
         {
-             Customer custlist = Helper<CustomerModel, Customer>.Map(customer);
+             Customer custlist = AppMapper<CustomerModel, Customer>.Map(customer);
              genericRepository.Update(custlist);
         }
 
         public void InsertCustomer(CustomerModel customer)
         {
-            Customer custlist = Helper<CustomerModel, Customer>.Map(customer);
+            Customer custlist = AppMapper<CustomerModel, Customer>.Map(customer);
             genericRepository.Insert(custlist);
         }
     }

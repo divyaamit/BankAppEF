@@ -2,7 +2,7 @@
 
 namespace BankAppEF.Datalayer.Implementation
 {
-    public static class Helper<Source, Destination>
+    public static class AppMapper<Source, Destination>
     {
         public static Mapper _myMapper = new Mapper(new MapperConfiguration(
             options => options.CreateMap<Source, Destination>()

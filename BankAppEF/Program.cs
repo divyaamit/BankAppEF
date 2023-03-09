@@ -7,6 +7,9 @@ using BankAppEF.Repository.Implementation;
 using BankAppEF.Repository.Interface;
 using AutoMapper;
 using BankAppEF.Entities;
+using BankApp.Repository.Interface;
+using BankApp.Repository.UnitOfWork;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +20,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var mapconfig = new MapperConfiguration(options => options.CreateMap<Customer, CustomerModel>());
-AutoMapper.IMapper mapper = mapconfig.CreateMapper();
-builder.Services.AddSingleton(mapper);
+//var mapconfig = new MapperConfiguration(options => options.CreateMap<Customer, CustomerModel>());
+//AutoMapper.IMapper mapper = mapconfig.CreateMapper();
+//builder.Services.AddSingleton(mapper);
 
 builder.Services.AddDbContext<AppDbContext>(options
     => options.UseSqlServer(builder.Configuration.GetConnectionString("DataConnection")));
@@ -30,11 +33,11 @@ builder.Services.AddCors(cors=>cors.AddPolicy("MyPolicy", builder =>
 }));
 
 builder.Services.AddTransient<ICustomerDTO, CustomerDTO>();
-builder.Services.AddTransient<ICustomeRepository, CustomerRepository>();
+builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
 builder.Services.AddTransient<IExecutiveDTO, ExecutiveDTO>();
 builder.Services.AddTransient<IAdminDTO, AdminDTO>();
 builder.Services.AddTransient<ITransactionsDTO, TransactionsDTO>();
-
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 
 var app = builder.Build();

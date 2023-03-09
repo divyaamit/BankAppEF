@@ -1,4 +1,8 @@
-﻿using BankAppEF.Datalayer.Interface;
+﻿using BankApp.Repository.Interface;
+using BankAppEF.Data.Entities.Models;
+using BankAppEF.Datalayer.Implementation;
+using BankAppEF.Datalayer.Interface;
+using BankAppEF.Datalayer.Models;
 using BankAppEF.Entities.Model;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,30 +14,33 @@ namespace BankAppEF.Controllers
     [ApiController]
     public class ExecutiveController : ControllerBase
     {
-        private readonly IExecutiveDTO executiveDL;
-        public ExecutiveController(IExecutiveDTO _executiveDL)
+        private readonly IUnitOfWork unitOfWork;
+        public ExecutiveController(IUnitOfWork unitOfWork)
         {
-            this.executiveDL = _executiveDL;
+            this.unitOfWork = unitOfWork;
         }
         // GET: api/<ExecutiveController>
         [HttpGet]
         public async Task<IEnumerable<ExecutiveModel>> Get()
         {
-            return await executiveDL.GetExecutiveDl();
+            IEnumerable<Executive> allExecutive = await unitOfWork.executive.GetAll();
+            return AppMapper<Executive, ExecutiveModel>.Map(allExecutive);
         }
 
         // GET api/<ExecutiveController>/5
         [HttpGet("{id}")]
         public async Task<ExecutiveModel> GetByID(int id)
         {
-            return await this.executiveDL.GetExecutiveById(id);
+            Executive executiveById = await this.unitOfWork.executive.GetById(id);
+            return AppMapper<Executive, ExecutiveModel>.Map(executiveById);
         }
 
         // POST api/<ExecutiveController>
         [HttpPost]
         public IActionResult Post(ExecutiveModel exe)
         {
-            this.executiveDL.InsertExecutive(exe);
+            Executive executiveDetails = AppMapper<ExecutiveModel, Executive >.Map(exe);
+            this.unitOfWork.executive.Insert(executiveDetails);
             return Ok();
         }
 
@@ -41,7 +48,8 @@ namespace BankAppEF.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(ExecutiveModel exe)
         {
-            this.executiveDL.UpdateExecutive(exe);
+            Executive executiveDetails = AppMapper<ExecutiveModel, Executive>.Map(exe);
+            this.unitOfWork.executive.Update(executiveDetails);
             return Ok();
         }
 
@@ -49,7 +57,7 @@ namespace BankAppEF.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            this.executiveDL.DeleteById(id);
+            this.unitOfWork.executive.DeleteById(id);
         }
     }
 }

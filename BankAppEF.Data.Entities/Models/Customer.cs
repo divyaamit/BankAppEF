@@ -1,4 +1,5 @@
-﻿using BankAppEF.Data.Entities.Models;
+﻿using BankApp.Data.Entities.Models;
+using BankAppEF.Data.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,27 +10,24 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace BankAppEF.Datalayer.Models
+namespace BankAppEF.Data.Entities.Models
 {
     public class Customer
     {
-        public int CustomerId { get; set; }
-        public string CustomerFirstName { get; set; }
-        public string CustomerLastName { get; set; }
-        public string CustomerEmail { get; set; }
-        public string CustomerContact { get; set; }
-        public string CustomerAddress { get; set; }
-        public string CustomerCity { get; set; }
-        public string CustomerState { get; set; }
-        public int CustomerZipCode { get; set;}
-        public string CustomerCountry { get; set; }
-        public string CustomerAccountNo { get; set; }
-        public float CustomerBalance { get; set; }
-        public string CustomerIFSC { get; set; }
-        public string CustomerSSN { get; set; }
-        //public virtual Transaction Transaction { get; set; }
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Contact { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public int ZipCode { get; set;}
+        public string Country { get; set; }
 
-        public List<Data.Entities.Models.Transaction> Transactions { get; set; }
-        //public virtual ICollection<Transaction> ReceiverId { get; set; }
+
+        public List<BankApp.Data.Entities.Models.Account> Accounts { get; set; }
+
     }
 }

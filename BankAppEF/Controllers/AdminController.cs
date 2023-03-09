@@ -1,7 +1,10 @@
-﻿using BankAppEF.Datalayer.Implementation;
+﻿using BankApp.Repository.Interface;
+using BankAppEF.Data.Entities.Models;
+using BankAppEF.Datalayer.Implementation;
 using BankAppEF.Datalayer.Interface;
 using BankAppEF.Entities.Model;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Encodings.Web;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,30 +14,34 @@ namespace BankAppEF.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly IAdminDTO adminDL;
-        public AdminController(IAdminDTO _adminDL)
+        private readonly IUnitOfWork unitOfWork;
+        public AdminController(IUnitOfWork unitOfWork)
         {
-            this.adminDL = _adminDL;
+            this.unitOfWork = unitOfWork;
         }
         // GET: api/<AdminController>
         [HttpGet]
         public async Task<IEnumerable<AdminModel>> Get()
         {
-            return await adminDL.GetAdminDl();
+            IEnumerable<Admin> allAdmin = await unitOfWork.admin.GetAll();
+            return AppMapper<Admin, AdminModel>.Map(allAdmin); 
         }
 
         // GET api/<AdminController>/5
         [HttpGet("{id}")]
         public async Task<AdminModel> GetByID(int id)
         {
-            return await this.adminDL.GetAdminById(id);
+            Admin adminById = await this.unitOfWork.admin.GetById(id);
+            
+            return AppMapper<Admin, AdminModel>.Map(adminById);
         }
 
         // POST api/<AdminController>
         [HttpPost]
         public IActionResult Post(AdminModel adm)
         {
-            this.adminDL.InsertAdmin(adm);
+            Admin adminDetails = AppMapper<AdminModel, Admin>.Map(adm);
+            this.unitOfWork.admin.Insert(adminDetails);
             return Ok();
         }
 
@@ -42,7 +49,8 @@ namespace BankAppEF.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(AdminModel adm)
         {
-            this.adminDL.UpdateAdmin(adm);
+            Admin adminDetails = AppMapper<AdminModel, Admin>.Map(adm);
+            this.unitOfWork.admin.Update(adminDetails);
             return Ok();
         }
 
@@ -50,7 +58,7 @@ namespace BankAppEF.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            this.adminDL.DeleteById(id);
+            this.unitOfWork.admin.DeleteById(id);
         }
     }
 }

@@ -33,26 +33,26 @@ namespace BankAppEF.Datalayer.Implementation
         public async Task<ExecutiveModel> GetExecutiveById(int id)
         {
             Executive executiveById = (Executive)await genericRepository.GetById(id);
-            ExecutiveModel exelist = Helper<Executive, ExecutiveModel>.Map(executiveById);
+            ExecutiveModel exelist = AppMapper<Executive, ExecutiveModel>.Map(executiveById);
             return exelist;
         }
 
         public async Task<IEnumerable<ExecutiveModel>> GetExecutiveDl()
         {
             IEnumerable<Executive> allExecutive = (await genericRepository.GetAll()).ToList();
-            IEnumerable<ExecutiveModel> exelist = Helper<Executive, ExecutiveModel>.Map(allExecutive);
+            IEnumerable<ExecutiveModel> exelist = AppMapper<Executive, ExecutiveModel>.Map(allExecutive);
             return exelist;
         }
 
         public void InsertExecutive(ExecutiveModel executive)
         {
-            Executive exelist = Helper<ExecutiveModel, Executive>.Map(executive);
+            Executive exelist = AppMapper<ExecutiveModel, Executive>.Map(executive);
             genericRepository.Insert(exelist);
         }
 
         public void UpdateExecutive(ExecutiveModel executive)
         {
-            Executive exeList = Helper<ExecutiveModel, Executive>.Map(executive);
+            Executive exeList = AppMapper<ExecutiveModel, Executive>.Map(executive);
             genericRepository.Update(exeList);
         }
     }
