@@ -13,33 +13,30 @@ namespace BankAppEF.Controllers
     [ApiController]
     public class TransactionsController : ControllerBase
     {
-        private readonly IUnitOfWork unitOfWork;
-        public TransactionsController(IUnitOfWork unitOfWork)
+        private readonly ITransactionsDTO transactionObjDl;
+        public TransactionsController(ITransactionsDTO transactionObjDl)
         {
-            this.unitOfWork = unitOfWork;
+            this.transactionObjDl = transactionObjDl;
         }
         // GET: api/<TransactionsController>
         [HttpGet]
         public async Task<IEnumerable<TransactionsModel>> Get()
         {
-            IEnumerable<Transaction> transactionDetails = await unitOfWork.transaction.GetAll();
-            return AppMapper<Transaction, TransactionsModel>.Map(transactionDetails);
+            return await this.transactionObjDl.GetTransactionsDl();
         }
 
         // GET api/<TransactionsController>/5
         [HttpGet("{id}")]
         public async Task<TransactionsModel> GetByID(int id)
         {
-            Transaction transactionById = await this.unitOfWork.transaction.GetById(id);
-            return AppMapper<Transaction, TransactionsModel>.Map(transactionById);
+            return await this.transactionObjDl.GetTransactionsById(id);
         }
 
         // POST api/<TransactionsController>
         [HttpPost]
         public IActionResult Post(TransactionsModel tra)
         {
-            Transaction transactionDetails = AppMapper<TransactionsModel,Transaction>.Map(tra);
-            this.unitOfWork.transaction.Insert(transactionDetails);
+            transactionObjDl.InsertTransactions(tra);
             return Ok();
         }
 
@@ -47,8 +44,7 @@ namespace BankAppEF.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(TransactionsModel tra)
         {
-            Transaction transactionDetails = AppMapper<TransactionsModel, Transaction>.Map(tra);
-            this.unitOfWork.transaction.Update(transactionDetails);
+            transactionObjDl.UpdateTransactions(tra);
             return Ok();
         }
 
@@ -56,7 +52,7 @@ namespace BankAppEF.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            this.unitOfWork.transaction.DeleteById(id);
+            transactionObjDl.DeleteById(id);
         }
     }
 }

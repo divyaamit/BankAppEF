@@ -8,9 +8,15 @@ namespace BankAppEF.Entities.Model
 {
     public class TransactionsModel
     {
-        public int TransactionId { get; set; }
-        public string TransactionType { get; set; }
-        public string TransactionAmount { get; set; }
-        public DateTime TransactionDate { get; set; }
+        public int Id { get; set; }
+        public string SenderAccNo { get; set; }
+        public string RecevierAccNo { get; set; }
+        public string ContactNo { get; set; }
+        public string Type { get; set; }
+        public float Amount { get; set; }   
+        public DateTime Date { get; set; }
+        public string Remarks { get; set; }
+
+       
     }
 }

@@ -14,33 +14,30 @@ namespace BankAppEF.Controllers
     [ApiController]
     public class ExecutiveController : ControllerBase
     {
-        private readonly IUnitOfWork unitOfWork;
-        public ExecutiveController(IUnitOfWork unitOfWork)
+        private readonly IExecutiveDTO executiveObjDl;
+        public ExecutiveController(IExecutiveDTO executiveObjDl)
         {
-            this.unitOfWork = unitOfWork;
+            this.executiveObjDl = executiveObjDl;
         }
         // GET: api/<ExecutiveController>
         [HttpGet]
         public async Task<IEnumerable<ExecutiveModel>> Get()
         {
-            IEnumerable<Executive> allExecutive = await unitOfWork.executive.GetAll();
-            return AppMapper<Executive, ExecutiveModel>.Map(allExecutive);
+            return await this.executiveObjDl.GetExecutiveDl();
         }
 
         // GET api/<ExecutiveController>/5
         [HttpGet("{id}")]
         public async Task<ExecutiveModel> GetByID(int id)
         {
-            Executive executiveById = await this.unitOfWork.executive.GetById(id);
-            return AppMapper<Executive, ExecutiveModel>.Map(executiveById);
+            return await this.executiveObjDl.GetExecutiveById(id);
         }
 
         // POST api/<ExecutiveController>
         [HttpPost]
         public IActionResult Post(ExecutiveModel exe)
         {
-            Executive executiveDetails = AppMapper<ExecutiveModel, Executive >.Map(exe);
-            this.unitOfWork.executive.Insert(executiveDetails);
+            executiveObjDl.InsertExecutive(exe);
             return Ok();
         }
 
@@ -48,8 +45,7 @@ namespace BankAppEF.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(ExecutiveModel exe)
         {
-            Executive executiveDetails = AppMapper<ExecutiveModel, Executive>.Map(exe);
-            this.unitOfWork.executive.Update(executiveDetails);
+            executiveObjDl.UpdateExecutive(exe);
             return Ok();
         }
 
@@ -57,7 +53,7 @@ namespace BankAppEF.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            this.unitOfWork.executive.DeleteById(id);
+            executiveObjDl.DeleteById(id);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BankApp.Repository.Interface;
 using BankAppEF.Data.Entities.Models;
 using BankAppEF.Datalayer.Interface;
 using BankAppEF.Datalayer.Models;
@@ -11,45 +12,42 @@ namespace BankAppEF.Datalayer.Implementation
 {
     public class CustomerDTO : ICustomerDTO
     {
-        private DBRepository<Customer> genericRepository;
-        private readonly AppDbContext dbContext;
+        private readonly IUnitOfWork unitOfWork;
 
-
-        public CustomerDTO(AppDbContext dbContextref)
+        public CustomerDTO(IUnitOfWork unitOfWork)
         {
-            this.genericRepository = new DBRepository<Customer>(dbContextref);
-            this.dbContext = dbContextref;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<CustomerModel>> GetCustomerDl()
         {
-            IEnumerable<Customer> allCustomer = (await genericRepository.GetAll()).ToList();
+            IEnumerable<Customer> allCustomer = (await unitOfWork.customer.GetAll()).ToList();
             IEnumerable<CustomerModel> custlist = AppMapper<Customer, CustomerModel>.Map(allCustomer);
             return custlist;
         }
 
         public async Task<CustomerModel> GetCustomerById(int id)
         {
-            Customer customerById = await genericRepository.GetById(id);
+            Customer customerById = await unitOfWork.customer.GetById(id);
             CustomerModel custlist = AppMapper<Customer, CustomerModel>.Map(customerById);
             return custlist;
         }
 
         public void DeleteById(int id)
         {
-            this.genericRepository.DeleteById(id);
+            this.unitOfWork.customer.DeleteById(id);
         }
 
         public void UpdateCustomer(CustomerModel customer)
         {
              Customer custlist = AppMapper<CustomerModel, Customer>.Map(customer);
-             genericRepository.Update(custlist);
+             unitOfWork.customer.Update(custlist);
         }
 
         public void InsertCustomer(CustomerModel customer)
         {
             Customer custlist = AppMapper<CustomerModel, Customer>.Map(customer);
-            genericRepository.Insert(custlist);
+            unitOfWork.customer.Insert(custlist);
         }
     }
 }

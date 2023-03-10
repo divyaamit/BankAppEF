@@ -9,10 +9,10 @@ namespace BankAppEF.Entities.Model
 {
     public class AdminModel
     {
-        public int AdminId { get; set; }
-        public string AdminFirstName { get; set; }
-        public string AdminLastName { get; set; }
-        public string AdminEmail { get; set; }
-        public string AdminContact { get; set; }
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Contact { get; set; }
     }
 }

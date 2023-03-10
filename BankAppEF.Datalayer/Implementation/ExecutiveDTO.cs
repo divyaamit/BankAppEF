@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BankApp.Repository.Interface;
 using BankAppEF.Data.Entities.Models;
 using BankAppEF.Datalayer.Interface;
 using BankAppEF.Datalayer.Models;
@@ -16,30 +17,28 @@ namespace BankAppEF.Datalayer.Implementation
 {
     public class ExecutiveDTO : IExecutiveDTO
     {
-        private IDBRepository<Executive> genericRepository;
-        private readonly AppDbContext dbContext;
+        private readonly IUnitOfWork unitOfWork;
 
-        public ExecutiveDTO(AppDbContext dbContextref)
+        public ExecutiveDTO(IUnitOfWork unitOfWork)
         {
-            this.genericRepository = new DBRepository<Executive>(dbContextref);
-            this.dbContext = dbContextref;
+            this.unitOfWork = unitOfWork;
         }
 
         public void DeleteById(int id)
         {
-            this.genericRepository.DeleteById(id);
+            this.unitOfWork.executive.DeleteById(id);
         }
 
         public async Task<ExecutiveModel> GetExecutiveById(int id)
         {
-            Executive executiveById = (Executive)await genericRepository.GetById(id);
+            Executive executiveById = await unitOfWork.executive.GetById(id);
             ExecutiveModel exelist = AppMapper<Executive, ExecutiveModel>.Map(executiveById);
             return exelist;
         }
 
         public async Task<IEnumerable<ExecutiveModel>> GetExecutiveDl()
         {
-            IEnumerable<Executive> allExecutive = (await genericRepository.GetAll()).ToList();
+            IEnumerable<Executive> allExecutive = (await unitOfWork.executive.GetAll()).ToList();
             IEnumerable<ExecutiveModel> exelist = AppMapper<Executive, ExecutiveModel>.Map(allExecutive);
             return exelist;
         }
@@ -47,13 +46,13 @@ namespace BankAppEF.Datalayer.Implementation
         public void InsertExecutive(ExecutiveModel executive)
         {
             Executive exelist = AppMapper<ExecutiveModel, Executive>.Map(executive);
-            genericRepository.Insert(exelist);
+            unitOfWork.executive.Insert(exelist);
         }
 
         public void UpdateExecutive(ExecutiveModel executive)
         {
             Executive exeList = AppMapper<ExecutiveModel, Executive>.Map(executive);
-            genericRepository.Update(exeList);
+            unitOfWork.executive.Update(exeList);
         }
     }
 }

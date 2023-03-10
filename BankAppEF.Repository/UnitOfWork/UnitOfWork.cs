@@ -22,6 +22,7 @@ namespace BankApp.Repository.UnitOfWork
             executive = new ExecutiveRepository(this.context);
             admin = new AdminRepository(this.context);
             transaction = new TransactionRepository(this.context);
+            account = new AccountRepository(this.context);
         }
         public ICustomerRepository customer
         {
@@ -43,6 +44,12 @@ namespace BankApp.Repository.UnitOfWork
         }
 
         public ITransactionRepository transaction
+        {
+            get;
+            private set;
+        }
+
+        public IAccountRepository account
         {
             get;
             private set;

@@ -12,6 +12,7 @@ namespace BankApp.Repository.Interface
         ICustomerRepository customer { get; }
         IExecutiveRepository executive { get; }
         IAdminRepository admin { get; }
+        IAccountRepository account { get; }
         ITransactionRepository transaction { get; }
 
         int save();

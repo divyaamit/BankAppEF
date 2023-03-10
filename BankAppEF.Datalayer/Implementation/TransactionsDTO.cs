@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BankApp.Repository.Interface;
 using BankAppEF.Data.Entities.Models;
 using BankAppEF.Datalayer.Interface;
 using BankAppEF.Datalayer.Models;
@@ -15,43 +16,41 @@ namespace BankAppEF.Datalayer.Implementation
 {
     public class TransactionsDTO : ITransactionsDTO
     {
-        private IDBRepository<Transaction> genericRepository;
-        private readonly AppDbContext dbContext;
+        private readonly IUnitOfWork unitOfWork;
 
-        public TransactionsDTO(AppDbContext dbContextref)
+        public TransactionsDTO(IUnitOfWork unitOfWork)
         {
-            this.genericRepository = new DBRepository<Transaction>(dbContextref);
-            this.dbContext = dbContextref;
+            this.unitOfWork = unitOfWork;
         }
         public async Task<TransactionsModel> GetTransactionsById(int id)
         {
-            Transaction transactionsById = (Transaction)await genericRepository.GetById(id);
+            Transaction transactionsById = await unitOfWork.transaction.GetById(id);
             TransactionsModel translist = AppMapper<Transaction, TransactionsModel>.Map(transactionsById);
             return translist;
         }
 
         public async Task<IEnumerable<TransactionsModel>> GetTransactionsDl()
         {
-            IEnumerable<Transaction> allTransacttion = (await genericRepository.GetAll()).ToList();
+            IEnumerable<Transaction> allTransacttion = (await unitOfWork.transaction.GetAll()).ToList();
             IEnumerable<TransactionsModel> translist = AppMapper<Transaction, TransactionsModel>.Map(allTransacttion);
             return translist;
         }
 
         public void DeleteById(int id)
         {
-            this.genericRepository.DeleteById(id);
+            this.unitOfWork.transaction.DeleteById(id);
         }
 
         public void UpdateTransactions(TransactionsModel transactions)
         {
             Transaction transList = AppMapper<TransactionsModel, Transaction>.Map(transactions);
-            genericRepository.Update(transList);
+            unitOfWork.transaction.Update(transList);
         }
 
         public void InsertTransactions(TransactionsModel transactions)
         {
             Transaction transList = AppMapper<TransactionsModel, Transaction>.Map(transactions);
-            genericRepository.Insert(transList);
+            unitOfWork.transaction.Insert(transList);
         }
     }
 }

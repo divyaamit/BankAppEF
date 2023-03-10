@@ -14,34 +14,30 @@ namespace BankAppEF.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly IUnitOfWork unitOfWork;
-        public AdminController(IUnitOfWork unitOfWork)
+        private readonly IAdminDTO adminObjDl;
+        public AdminController(IAdminDTO adminObjDl)
         {
-            this.unitOfWork = unitOfWork;
+            this.adminObjDl = adminObjDl;
         }
         // GET: api/<AdminController>
         [HttpGet]
         public async Task<IEnumerable<AdminModel>> Get()
         {
-            IEnumerable<Admin> allAdmin = await unitOfWork.admin.GetAll();
-            return AppMapper<Admin, AdminModel>.Map(allAdmin); 
+            return await this.adminObjDl.GetAdminDl();
         }
 
         // GET api/<AdminController>/5
         [HttpGet("{id}")]
         public async Task<AdminModel> GetByID(int id)
         {
-            Admin adminById = await this.unitOfWork.admin.GetById(id);
-            
-            return AppMapper<Admin, AdminModel>.Map(adminById);
+            return await this.adminObjDl.GetAdminById(id);
         }
 
         // POST api/<AdminController>
         [HttpPost]
         public IActionResult Post(AdminModel adm)
         {
-            Admin adminDetails = AppMapper<AdminModel, Admin>.Map(adm);
-            this.unitOfWork.admin.Insert(adminDetails);
+            adminObjDl.InsertAdmin(adm);
             return Ok();
         }
 
@@ -49,8 +45,7 @@ namespace BankAppEF.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(AdminModel adm)
         {
-            Admin adminDetails = AppMapper<AdminModel, Admin>.Map(adm);
-            this.unitOfWork.admin.Update(adminDetails);
+            adminObjDl.UpdateAdmin(adm);
             return Ok();
         }
 
@@ -58,7 +53,7 @@ namespace BankAppEF.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            this.unitOfWork.admin.DeleteById(id);
+            adminObjDl.DeleteById(id);
         }
     }
 }
