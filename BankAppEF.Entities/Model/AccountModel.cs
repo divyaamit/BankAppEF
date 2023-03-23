@@ -15,6 +15,6 @@ namespace BankApp.Entities.Model
         public string IFSC { get; set; }
         public string SSN { get; set; }
         public int Id { get; set; }
-        public List<TransactionsModel> Transaction { get; set; }
+        //public List<TransactionsModel> Transaction { get; set; }
     }
 }

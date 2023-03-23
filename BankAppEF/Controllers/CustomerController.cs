@@ -12,6 +12,7 @@ using System.Collections.Generic;
 
 namespace BankAppEF.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase

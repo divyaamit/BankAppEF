@@ -14,8 +14,6 @@ namespace BankAppEF.Datalayer.Models
 
 
         //private static IConfiguration configuration = configurationBuilder.Build();
-        public AppDbContext()
-        { }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
@@ -43,9 +41,6 @@ namespace BankAppEF.Datalayer.Models
                 .WithMany()
                 .HasForeignKey(b => b.RecevierAccNo)
                 .OnDelete(DeleteBehavior.NoAction);
-
-            
-            
         }
 
         public DbSet<Customer> Customers { get; set; }
